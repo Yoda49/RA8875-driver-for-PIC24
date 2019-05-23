@@ -5,9 +5,6 @@
 #define CS_LCD_HIGH LATDbits.LATD4 = 1
 #define CS_LCD_LOW  LATDbits.LATD4 = 0
 
-#define RED_LED_OFF LATDbits.LATD3 = 0
-#define RED_LED_ON  LATDbits.LATD3 = 1
-
 #define DISPLAY_BUSY_STATUS PORTDbits.RD1
 #define DISPLAY_INT_STATUS  PORTDbits.RD0
 
@@ -577,145 +574,17 @@ void ra8875_draw_triangle (unsigned int x0, unsigned int y0, unsigned int x1, un
 
 
 
-// ======================================================================================
-//      Draws a HW accelerated ellipse on the display
-//
-//      xCenter[in]   The 0-based x location of the ellipse's center
-//      yCenter[in]   The 0-based y location of the ellipse's center
-//      longAxis[in]  The size in pixels of the ellipse's long axis
-//      shortAxis[in] The size in pixels of the ellipse's short axis
-//      color[in]     The RGB565 color to use when drawing the pixel
-//			filled    		True or false
-// ======================================================================================
-/*
-void ra8875_draw_ellipse (unsigned int xCenter, unsigned int yCenter, unsigned int longAxis, unsigned int shortAxis, unsigned char color, char filled)
-{
-	// Set active window X
-	writeReg(RA8875_HSAW0, 0);
-	writeReg(RA8875_HSAW1, 0);
-	writeReg(RA8875_HEAW0, 0x1F);
-	writeReg(RA8875_HEAW1, 0x03);
-	
-	// Set active window Y
-	writeReg(RA8875_VSAW0, 0);
-	writeReg(RA8875_VSAW1, 0);  
-	writeReg(RA8875_VEAW0, 0xDF);
-	writeReg(RA8875_VEAW1, 0x01);
-	
-	writeReg (RA8875_CURH0, 0);
-	writeReg (RA8875_CURH1, 0);
-	writeReg (RA8875_CURV0, 0);
-	writeReg (RA8875_CURV1, 0); 
-	
-	writeReg(0xA5, xCenter);
-	writeReg(0xA6, xCenter >> 8);
-	writeReg(0xA7, yCenter);
-	writeReg(0xA8, yCenter >> 8);
-	
-	writeReg(0xA1, longAxis);
-	writeReg(0xA2, longAxis >> 8);
-	writeReg(0xA3, shortAxis);
-	writeReg(0xA4, shortAxis >> 8);
-	
-	writeReg(RA8875_FGCR0,  color >> 11); // red bits
-	writeReg(RA8875_FGCR1, (color & 0x7E0) >> 5);  // green bits
-	writeReg(RA8875_FGCR2,  color & 0x1F); // blue bits
-	
-	if (filled) writeReg(0xA0, 0xC0); else writeReg(0xA0, 0x80);
-	
-	 while (!(DISPLAY_BUSY_STATUS)) {}
-}
-*/
-// ======================================================================================
-//      Draws a HW accelerated filled curve on the display
-//
-//      xCenter[in]   The 0-based x location of the ellipse's center
-//      yCenter[in]   The 0-based y location of the ellipse's center
-//      longAxis[in]  The size in pixels of the ellipse's long axis
-//      shortAxis[in] The size in pixels of the ellipse's short axis
-//      curvePart[in] The corner to draw, where in clock-wise motion:
-//                    0 = 180-270В°
-//                    1 = 270-0В°
-//                    2 = 0-90В°
-//                    3 = 90-180В°
-//      color[in]     The RGB565 color to use when drawing the pixel
-//			filled    		True or false
-// ======================================================================================
-/*
-void ra8875_draw_curve (unsigned int xCenter, unsigned int yCenter, unsigned int longAxis, unsigned int shortAxis, unsigned char curvePart, unsigned char color, char filled)
-{
-	// Set active window X
-	writeReg(RA8875_HSAW0, 0);
-	writeReg(RA8875_HSAW1, 0);
-	writeReg(RA8875_HEAW0, 0x1F);
-	writeReg(RA8875_HEAW1, 0x03);
-	
-	// Set active window Y
-	writeReg(RA8875_VSAW0, 0);
-	writeReg(RA8875_VSAW1, 0);  
-	writeReg(RA8875_VEAW0, 0xDF);
-	writeReg(RA8875_VEAW1, 0x01);
-	
-	writeReg (RA8875_CURH0, 0);
-	writeReg (RA8875_CURH1, 0);
-	writeReg (RA8875_CURV0, 0);
-	writeReg (RA8875_CURV1, 0); 
-	
-	writeReg(0xA5, xCenter);
-	writeReg(0xA6, xCenter >> 8);
-	writeReg(0xA7, yCenter);
-	writeReg(0xA8, yCenter >> 8);
-	
-	writeReg(0xA1, longAxis);
-	writeReg(0xA2, longAxis >> 8);
-	writeReg(0xA3, shortAxis);
-	writeReg(0xA4, shortAxis >> 8);
-
-	writeReg(RA8875_FGCR0,  color >> 11); // red bits
-	writeReg(RA8875_FGCR1, (color & 0x7E0) >> 5);  // green bits
-	writeReg(RA8875_FGCR2,  color & 0x1F); // blue bits
-
-	if (filled) writeReg(0xA0, 0xD0 | (curvePart & 0x03)); else writeReg(0xA0, 0x90 | (curvePart & 0x03));
-
-	while (!(DISPLAY_BUSY_STATUS)) {}
-}
-
-*/
-
-
-
-
-
-
-// ======================================================================================
-// GPIOX
-// ======================================================================================
-/*
-void ra8875_gpiox(char on)
-{
-  if (on) writeReg(RA8875_GPIOX, 1); else writeReg(RA8875_GPIOX, 0);
-}
-*/
 
 // ======================================================================================
 // PWM1 OUT
 // ======================================================================================
 void ra8875_pwm1_out(unsigned char p)
 {
-  writeReg(RA8875_P1DCR, p);
+	writeReg(RA8875_P1DCR, p);
 	
 	delay_ms (10000);
 }
 
-// ======================================================================================
-// PWM2 OUT
-// ======================================================================================
-/*
-void ra8875_pwm2_out(unsigned char p)
-{
-  writeReg(RA8875_P2DCR, p);
-}
-*/
 
 // ======================================================================================
 // PWM1 config
