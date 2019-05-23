@@ -394,23 +394,16 @@ void ra8875_draw_triangle      (unsigned int x0, unsigned int y0, unsigned int x
 
 
 /* Backlight */
-//void ra8875_gpiox       (char on);
 void ra8875_pwm1_config (char on, unsigned char clock);
-//void ra8875_pwm2_config (char on, unsigned char clock);
 void ra8875_pwm1_out    (unsigned char p);
-//void ra8875_pwm2_out    (unsigned char p);
 
 
 /* Low level access */
-void writeReg(unsigned char reg, unsigned char val);
-void writeReg_slow(unsigned char reg, unsigned char val);
+void writeReg (unsigned char reg, unsigned char val);
+void writeReg_slow (unsigned char reg, unsigned char val);
 
-//unsigned char readReg(unsigned char reg);
-void    writeData(unsigned char d);
-//unsigned char readData(void);
-void    writeCommand(unsigned char d);
-//unsigned char readStatus(void);
-
+void writeData (unsigned char d);
+void writeCommand (unsigned char d);
 
 
 
