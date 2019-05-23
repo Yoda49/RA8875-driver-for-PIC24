@@ -1,6 +1,5 @@
-#include "../inc/RA8875.h"
-#include "../inc/P24EP512GP806.h"
-#include "../inc/math.h"
+#include "RA8875.h"
+#include <P24EP512GP806.h>
 
 #define CS_LCD_HIGH LATDbits.LATD4 = 1
 #define CS_LCD_LOW  LATDbits.LATD4 = 0
