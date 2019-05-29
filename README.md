@@ -1,5 +1,5 @@
 # RA8875-driver-for-PIC24
-RA8875 driver with display ER-TFTM070-5 (800px * 480px) for PIC24EP512GP806 mcu.
+RA8875 SPI driver with display ER-TFTM070-5 (800px * 480px) for PIC24EP512GP806 mcu.
 
 Interface - 4 wire SPI at 20 mHz.
 
